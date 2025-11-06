@@ -1,6 +1,6 @@
 {
   "name": "@pppp606/href",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "High-Resolution Edit Format - A comprehensive event capture and replay system for text editing interactions",
   "type": "module",
   "main": "./dist/index.js",
