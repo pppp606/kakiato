@@ -21,7 +21,7 @@ export class PlaybackEngine {
   private loop = false;
   private timeoutId: ReturnType<typeof setTimeout> | null = null;
   private startTime = 0;
-  private pausedAt = 0;
+  private pausedAt = 0; // Time in the recording timeline (not real time)
   private onEventHandlers: PlaybackEventHandler[] = [];
 
   constructor(options: PlaybackOptions = {}) {
@@ -63,7 +63,11 @@ export class PlaybackEngine {
     if (this.events.length === 0) return;
 
     this.isPlaying = true;
-    this.startTime = Date.now() - this.pausedAt;
+    // startTime is when we started playing in real time
+    // pausedAt is the recording timeline position we're resuming from
+    // Calculate: if we're at pausedAt in recording time, how much real time has elapsed?
+    // realTime = recordingTime / speed
+    this.startTime = Date.now() - this.pausedAt / this.speed;
     this.scheduleNextEvent();
   }
 
@@ -74,7 +78,9 @@ export class PlaybackEngine {
     if (!this.isPlaying) return;
 
     this.isPlaying = false;
-    this.pausedAt = Date.now() - this.startTime;
+    // Store the recording timeline position (not real time elapsed)
+    // recordingTime = realTime * speed
+    this.pausedAt = (Date.now() - this.startTime) * this.speed;
 
     if (this.timeoutId) {
       clearTimeout(this.timeoutId);
@@ -153,7 +159,9 @@ export class PlaybackEngine {
    */
   getCurrentTime(): number {
     if (this.isPlaying) {
-      return Date.now() - this.startTime;
+      // Return recording timeline position
+      // recordingTime = realTime * speed
+      return (Date.now() - this.startTime) * this.speed;
     }
     return this.pausedAt;
   }
@@ -198,8 +206,14 @@ export class PlaybackEngine {
     }
 
     const event = this.events[this.currentIndex];
-    const currentTime = Date.now() - this.startTime;
-    const delay = Math.max(0, (event.time - currentTime) / this.speed);
+    // Calculate elapsed real time
+    const elapsedRealTime = Date.now() - this.startTime;
+    // Convert to recording timeline: recordingTime = realTime * speed
+    const currentTime = elapsedRealTime * this.speed;
+    // Calculate remaining time in recording timeline
+    const timeUntilEvent = event.time - currentTime;
+    // Convert to real time delay: realDelay = recordingDelay / speed
+    const delay = Math.max(0, timeUntilEvent / this.speed);
 
     this.timeoutId = setTimeout(() => {
       this.emitEvent(event, this.currentIndex);
