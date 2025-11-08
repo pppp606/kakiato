@@ -5,20 +5,20 @@
  * shared across recorder and player implementations.
  */
 
-export type HrefVersion = "0.1";
+export type KakiatoVersion = "0.1";
 
-type KnownHrefDevice = "desktop" | "mobile" | "tablet";
+type KnownKakiatoDevice = "desktop" | "mobile" | "tablet";
 
-export interface HrefSessionMeta {
+export interface KakiatoSessionMeta {
   id: string;
   user_agent: string;
   lang: string;
-  device: KnownHrefDevice | (string & {});
+  device: KnownKakiatoDevice | (string & {});
   source: string;
   meta?: Record<string, unknown>;
 }
 
-export interface HrefModifiers {
+export interface KakiatoModifiers {
   shift?: boolean;
   ctrl?: boolean;
   alt?: boolean;
@@ -26,14 +26,14 @@ export interface HrefModifiers {
   [modifier: string]: boolean | undefined;
 }
 
-export interface HrefEventBase {
+export interface KakiatoEventBase {
   time: number;
-  type: HrefEventType;
+  type: KakiatoEventType;
   pos?: number;
   meta?: Record<string, unknown>;
 }
 
-export type HrefEventType =
+export type KakiatoEventType =
   | "keydown"
   | "keyup"
   | "beforeinput"
@@ -46,65 +46,65 @@ export type HrefEventType =
   | "blur"
   | "custom";
 
-export interface HrefKeyboardEvent extends HrefEventBase {
+export interface KakiatoKeyboardEvent extends KakiatoEventBase {
   type: "keydown" | "keyup";
   key: string;
   code: string;
-  modifiers?: HrefModifiers;
+  modifiers?: KakiatoModifiers;
 }
 
-export interface HrefInputEvent extends HrefEventBase {
+export interface KakiatoInputEvent extends KakiatoEventBase {
   type: "beforeinput" | "input";
   inputType: string;
   data?: string | null;
   text?: string | null;
-  modifiers?: HrefModifiers;
+  modifiers?: KakiatoModifiers;
 }
 
-export interface HrefCompositionSegment {
+export interface KakiatoCompositionSegment {
   text: string;
   highlight?: boolean;
 }
 
-export interface HrefCompositionEvent extends HrefEventBase {
+export interface KakiatoCompositionEvent extends KakiatoEventBase {
   type: "compositionstart" | "compositionupdate" | "compositionend";
   data?: string;
-  segments?: HrefCompositionSegment[];
+  segments?: KakiatoCompositionSegment[];
 }
 
-export interface HrefSelectionPosition {
+export interface KakiatoSelectionPosition {
   index: number;
   affinity?: "forward" | "backward" | "none";
 }
 
-export interface HrefSelectionChangeEvent extends HrefEventBase {
+export interface KakiatoSelectionChangeEvent extends KakiatoEventBase {
   type: "selectionchange";
-  anchor: HrefSelectionPosition;
-  focus: HrefSelectionPosition;
+  anchor: KakiatoSelectionPosition;
+  focus: KakiatoSelectionPosition;
 }
 
-export interface HrefFocusEvent extends HrefEventBase {
+export interface KakiatoFocusEvent extends KakiatoEventBase {
   type: "focus" | "blur";
 }
 
-export interface HrefCustomEvent extends HrefEventBase {
+export interface KakiatoCustomEvent extends KakiatoEventBase {
   type: "custom";
   label: string;
   payload?: Record<string, unknown>;
 }
 
-export type HrefEvent =
-  | HrefKeyboardEvent
-  | HrefInputEvent
-  | HrefCompositionEvent
-  | HrefSelectionChangeEvent
-  | HrefFocusEvent
-  | HrefCustomEvent;
+export type KakiatoEvent =
+  | KakiatoKeyboardEvent
+  | KakiatoInputEvent
+  | KakiatoCompositionEvent
+  | KakiatoSelectionChangeEvent
+  | KakiatoFocusEvent
+  | KakiatoCustomEvent;
 
-export interface HrefDocument {
-  version: HrefVersion;
-  session: HrefSessionMeta;
+export interface KakiatoDocument {
+  version: KakiatoVersion;
+  session: KakiatoSessionMeta;
   initial_text: string;
-  events: HrefEvent[];
+  events: KakiatoEvent[];
 }
 

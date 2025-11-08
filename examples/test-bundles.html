@@ -62,9 +62,9 @@
   <script type="module">
     // Test Recorder
     try {
-      const { HrefRecorder } = await import('../dist/recorder.bundle.js');
+      const { KakiatoRecorder } = await import('../dist/recorder.bundle.js');
 
-      const recorder = new HrefRecorder();
+      const recorder = new KakiatoRecorder();
       recorder.start();
       recorder.stop();
       const doc = recorder.getDocument();
@@ -81,9 +81,9 @@
 
     // Test Player
     try {
-      const { HrefPlayer } = await import('../dist/player.bundle.js');
+      const { KakiatoPlayer } = await import('../dist/player.bundle.js');
 
-      const player = new HrefPlayer({ speed: 1.5 });
+      const player = new KakiatoPlayer({ speed: 1.5 });
       const sampleDoc = {
         version: '0.1',
         session: {

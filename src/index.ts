@@ -5,15 +5,15 @@
  */
 
 // Recorder
-export { HrefRecorder } from './recorder/HrefRecorder.js';
-export type { RecorderOptions } from './recorder/HrefRecorder.js';
+export { KakiatoRecorder } from './recorder/KakiatoRecorder.js';
+export type { RecorderOptions } from './recorder/KakiatoRecorder.js';
 
 // Player
-export { HrefPlayer } from './player/HrefPlayer.js';
+export { KakiatoPlayer } from './player/KakiatoPlayer.js';
 export { PlaybackEngine } from './player/engine.js';
 export { StateReconstructor } from './player/state.js';
 export { TextViewer } from './player/viewer.js';
-export type { PlayerOptions, PlayerState } from './player/HrefPlayer.js';
+export type { PlayerOptions, PlayerState } from './player/KakiatoPlayer.js';
 export type { TextState } from './player/state.js';
 export type { ViewerOptions } from './player/viewer.js';
 

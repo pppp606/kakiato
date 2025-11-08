@@ -159,7 +159,7 @@
   <div class="stats" id="stats">Load a recording file to play</div>
 
   <script type="module">
-    import { HrefPlayer } from '../dist/player.bundle.js';
+    import { KakiatoPlayer } from '../dist/player.bundle.js';
 
     const fileInput = document.getElementById('fileInput');
     const playBtn = document.getElementById('playBtn');
@@ -177,7 +177,7 @@
     let updateInterval = null;
 
     // Initialize player
-    player = new HrefPlayer({
+    player = new KakiatoPlayer({
       container: viewerContainer,
       speed: 1.0,
     });

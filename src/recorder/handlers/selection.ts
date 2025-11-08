@@ -4,14 +4,14 @@
  * Captures selection changes including cursor movement and text selection.
  */
 
-import type { HrefSelectionChangeEvent } from '../../core/types.js';
+import type { KakiatoSelectionChangeEvent } from '../../core/types.js';
 
 export class SelectionHandler {
   private startTime: number;
-  private onEvent: (event: HrefSelectionChangeEvent) => void;
+  private onEvent: (event: KakiatoSelectionChangeEvent) => void;
   private lastSelection: { anchorIndex: number; focusIndex: number } | null = null;
 
-  constructor(startTime: number, onEvent: (event: HrefSelectionChangeEvent) => void) {
+  constructor(startTime: number, onEvent: (event: KakiatoSelectionChangeEvent) => void) {
     this.startTime = startTime;
     this.onEvent = onEvent;
   }
@@ -59,7 +59,7 @@ export class SelectionHandler {
     // Determine affinity
     const affinity = this.determineAffinity(anchorIndex, focusIndex);
 
-    const hrefEvent: HrefSelectionChangeEvent = {
+    const kakiatoEvent: KakiatoSelectionChangeEvent = {
       time: Date.now() - this.startTime,
       type: 'selectionchange',
       anchor: {
@@ -72,7 +72,7 @@ export class SelectionHandler {
       },
     };
 
-    this.onEvent(hrefEvent);
+    this.onEvent(kakiatoEvent);
   };
 
   /**

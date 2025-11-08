@@ -25,10 +25,10 @@ npm install kakiato
 ### Recording
 
 ```typescript
-import { HrefRecorder } from 'kakiato';
+import { KakiatoRecorder } from 'kakiato';
 
 // Create recorder
-const recorder = new HrefRecorder({
+const recorder = new KakiatoRecorder({
   target: document.querySelector('textarea')
 });
 
@@ -48,10 +48,10 @@ const json = recorder.exportJSON();
 ### Playback
 
 ```typescript
-import { HrefPlayer } from 'kakiato/player';
+import { KakiatoPlayer } from 'kakiato/player';
 
 // Create player with container
-const player = new HrefPlayer({
+const player = new KakiatoPlayer({
   container: document.getElementById('viewer'),
   speed: 1.0
 });
@@ -73,7 +73,7 @@ player.setSpeed(2.0);
 
 ## API Reference
 
-### HrefRecorder
+### KakiatoRecorder
 
 #### Constructor Options
 
@@ -88,11 +88,11 @@ interface RecorderOptions {
 
 - `start(): void` - Start recording events
 - `stop(): void` - Stop recording
-- `getDocument(): HrefDocument` - Get recorded document
+- `getDocument(): KakiatoDocument` - Get recorded document
 - `exportJSON(): string` - Export as JSON string
 - `exportNDJSON(): string` - Export as newline-delimited JSON
 
-### HrefPlayer
+### KakiatoPlayer
 
 #### Constructor Options
 
@@ -125,7 +125,7 @@ interface ViewerStyles {
 **Example with custom styles:**
 
 ```typescript
-const player = new HrefPlayer({
+const player = new KakiatoPlayer({
   container: document.getElementById('viewer'),
   speed: 1.0,
   styles: {
@@ -143,7 +143,7 @@ const player = new HrefPlayer({
 
 #### Methods
 
-- `load(document: HrefDocument): void` - Load document
+- `load(document: KakiatoDocument): void` - Load document
 - `loadJSON(json: string): void` - Load from JSON string
 - `play(): void` - Start playback
 - `pause(): void` - Pause playback
@@ -166,7 +166,7 @@ Kakiato documents follow a structured JSON format:
     "user_agent": "Mozilla/5.0...",
     "lang": "ja",
     "device": "desktop",
-    "source": "HrefRecorder"
+    "source": "KakiatoRecorder"
   },
   "initial_text": "",
   "events": [

@@ -128,7 +128,7 @@
   <div class="output" id="output">No data</div>
 
   <script type="module">
-    import { HrefRecorder } from '../dist/recorder.bundle.js';
+    import { KakiatoRecorder } from '../dist/recorder.bundle.js';
 
     let recorder = null;
     let startTime = 0;
@@ -141,7 +141,7 @@
     const output = document.getElementById('output');
 
     startBtn.addEventListener('click', () => {
-      recorder = new HrefRecorder({ target: editor });
+      recorder = new KakiatoRecorder({ target: editor });
       recorder.start();
       startTime = Date.now();
 

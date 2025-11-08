@@ -4,5 +4,5 @@
  * Captures editing events and generates Kakiato documents.
  */
 
-export { HrefRecorder } from './HrefRecorder.js';
+export { KakiatoRecorder } from './KakiatoRecorder.js';
 export type * from '../core/types.js';

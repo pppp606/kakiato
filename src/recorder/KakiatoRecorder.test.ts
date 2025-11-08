@@ -1,16 +1,16 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { HrefRecorder } from './HrefRecorder';
+import { KakiatoRecorder } from './KakiatoRecorder';
 
-describe('HrefRecorder', () => {
-  let recorder: HrefRecorder;
+describe('KakiatoRecorder', () => {
+  let recorder: KakiatoRecorder;
 
   beforeEach(() => {
-    recorder = new HrefRecorder();
+    recorder = new KakiatoRecorder();
   });
 
   describe('initialization', () => {
     it('should create a recorder instance', () => {
-      expect(recorder).toBeInstanceOf(HrefRecorder);
+      expect(recorder).toBeInstanceOf(KakiatoRecorder);
     });
 
     it('should not auto-start by default', () => {
@@ -21,7 +21,7 @@ describe('HrefRecorder', () => {
     });
 
     it('should auto-start when specified', () => {
-      const autoRecorder = new HrefRecorder({ autoStart: true });
+      const autoRecorder = new KakiatoRecorder({ autoStart: true });
       // Just verify it doesn't throw
       autoRecorder.stop();
     });
@@ -75,7 +75,7 @@ describe('HrefRecorder', () => {
       expect(doc.session).toHaveProperty('device');
       expect(doc.session).toHaveProperty('source');
 
-      expect(doc.session.source).toBe('HrefRecorder');
+      expect(doc.session.source).toBe('KakiatoRecorder');
     });
 
     it('should throw error when no session available', () => {
@@ -161,8 +161,8 @@ describe('HrefRecorder', () => {
 
   describe('session id uniqueness', () => {
     it('should generate unique session IDs', () => {
-      const recorder1 = new HrefRecorder();
-      const recorder2 = new HrefRecorder();
+      const recorder1 = new KakiatoRecorder();
+      const recorder2 = new KakiatoRecorder();
 
       recorder1.start();
       recorder2.start();

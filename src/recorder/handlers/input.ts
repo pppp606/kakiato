@@ -4,13 +4,13 @@
  * Captures beforeinput and input events for text insertion and deletion.
  */
 
-import type { HrefInputEvent, HrefModifiers } from '../../core/types.js';
+import type { KakiatoInputEvent, KakiatoModifiers } from '../../core/types.js';
 
 export class InputHandler {
   private startTime: number;
-  private onEvent: (event: HrefInputEvent) => void;
+  private onEvent: (event: KakiatoInputEvent) => void;
 
-  constructor(startTime: number, onEvent: (event: HrefInputEvent) => void) {
+  constructor(startTime: number, onEvent: (event: KakiatoInputEvent) => void) {
     this.startTime = startTime;
     this.onEvent = onEvent;
   }
@@ -22,7 +22,7 @@ export class InputHandler {
     const pos = this.getCursorPosition(event.target);
     const modifiers = this.extractModifiers(event);
 
-    const hrefEvent: HrefInputEvent = {
+    const kakiatoEvent: KakiatoInputEvent = {
       time: Date.now() - this.startTime,
       type: 'beforeinput',
       inputType: event.inputType,
@@ -31,7 +31,7 @@ export class InputHandler {
       ...(modifiers && { modifiers }),
     };
 
-    this.onEvent(hrefEvent);
+    this.onEvent(kakiatoEvent);
   };
 
   /**
@@ -50,7 +50,7 @@ export class InputHandler {
       text = target.textContent;
     }
 
-    const hrefEvent: HrefInputEvent = {
+    const kakiatoEvent: KakiatoInputEvent = {
       time: Date.now() - this.startTime,
       type: 'input',
       inputType: event.inputType,
@@ -60,13 +60,13 @@ export class InputHandler {
       ...(modifiers && { modifiers }),
     };
 
-    this.onEvent(hrefEvent);
+    this.onEvent(kakiatoEvent);
   };
 
   /**
    * Extract modifier keys from input event
    */
-  private extractModifiers(event: InputEvent): HrefModifiers | undefined {
+  private extractModifiers(event: InputEvent): KakiatoModifiers | undefined {
     // InputEvent doesn't directly expose modifier keys,
     // but we can check if it's a UIEvent
     const uiEvent = event as UIEvent & {
@@ -76,7 +76,7 @@ export class InputHandler {
       metaKey?: boolean;
     };
 
-    const modifiers: HrefModifiers = {};
+    const modifiers: KakiatoModifiers = {};
     let hasModifiers = false;
 
     if (uiEvent.shiftKey) {

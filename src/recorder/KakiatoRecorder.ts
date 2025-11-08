@@ -1,10 +1,10 @@
 /**
- * HrefRecorder
+ * KakiatoRecorder
  *
  * Main class for recording editing events.
  */
 
-import type { HrefDocument, HrefEvent, HrefSessionMeta } from '../core/types.js';
+import type { KakiatoDocument, KakiatoEvent, KakiatoSessionMeta } from '../core/types.js';
 import { KeyboardHandler } from './handlers/keyboard.js';
 import { InputHandler } from './handlers/input.js';
 import { CompositionHandler } from './handlers/composition.js';
@@ -18,9 +18,9 @@ export interface RecorderOptions {
   autoStart?: boolean;
 }
 
-export class HrefRecorder {
-  private events: HrefEvent[] = [];
-  private sessionMetadata: HrefSessionMeta | null = null;
+export class KakiatoRecorder {
+  private events: KakiatoEvent[] = [];
+  private sessionMetadata: KakiatoSessionMeta | null = null;
   private isRecording = false;
   private initialText = '';
   private startTime = 0;
@@ -58,7 +58,7 @@ export class HrefRecorder {
     this.initialText = this.getInitialText();
 
     // Initialize and attach event handlers
-    const onEvent = (event: HrefEvent) => {
+    const onEvent = (event: KakiatoEvent) => {
       if (this.isRecording) {
         this.events.push(event);
       }
@@ -135,7 +135,7 @@ export class HrefRecorder {
   /**
    * Get the recorded document
    */
-  getDocument(): HrefDocument {
+  getDocument(): KakiatoDocument {
     if (!this.sessionMetadata) {
       throw new Error('No recording session available');
     }
@@ -167,13 +167,13 @@ export class HrefRecorder {
     return lines.join('\n');
   }
 
-  private createSessionMetadata(): HrefSessionMeta {
+  private createSessionMetadata(): KakiatoSessionMeta {
     return {
       id: crypto.randomUUID(),
       user_agent: navigator.userAgent,
       lang: navigator.language,
       device: this.detectDevice(),
-      source: 'HrefRecorder',
+      source: 'KakiatoRecorder',
     };
   }
 

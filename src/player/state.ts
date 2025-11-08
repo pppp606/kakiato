@@ -4,7 +4,7 @@
  * Rebuilds text content and cursor state from events.
  */
 
-import type { HrefEvent } from '../core/types.js';
+import type { KakiatoEvent } from '../core/types.js';
 
 export interface TextState {
   text: string;
@@ -53,7 +53,7 @@ export class StateReconstructor {
   /**
    * Apply an event to the state
    */
-  applyEvent(event: HrefEvent): void {
+  applyEvent(event: KakiatoEvent): void {
     switch (event.type) {
       case 'input':
         this.handleInputEvent(event);
@@ -92,7 +92,7 @@ export class StateReconstructor {
   /**
    * Handle input event
    */
-  private handleInputEvent(event: HrefEvent): void {
+  private handleInputEvent(event: KakiatoEvent): void {
     if (event.type !== 'input') return;
 
     // If the event contains the full text, use it
@@ -132,7 +132,7 @@ export class StateReconstructor {
   /**
    * Handle selection change event
    */
-  private handleSelectionChange(event: HrefEvent): void {
+  private handleSelectionChange(event: KakiatoEvent): void {
     if (event.type !== 'selectionchange') return;
 
     const anchor = event.anchor.index;

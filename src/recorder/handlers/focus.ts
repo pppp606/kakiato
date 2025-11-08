@@ -4,13 +4,13 @@
  * Captures focus and blur events to track when editing areas become active or inactive.
  */
 
-import type { HrefFocusEvent } from '../../core/types.js';
+import type { KakiatoFocusEvent } from '../../core/types.js';
 
 export class FocusHandler {
   private startTime: number;
-  private onEvent: (event: HrefFocusEvent) => void;
+  private onEvent: (event: KakiatoFocusEvent) => void;
 
-  constructor(startTime: number, onEvent: (event: HrefFocusEvent) => void) {
+  constructor(startTime: number, onEvent: (event: KakiatoFocusEvent) => void) {
     this.startTime = startTime;
     this.onEvent = onEvent;
   }
@@ -23,12 +23,12 @@ export class FocusHandler {
     const target = event.target;
     if (!this.isEditableElement(target)) return;
 
-    const hrefEvent: HrefFocusEvent = {
+    const kakiatoEvent: KakiatoFocusEvent = {
       time: Date.now() - this.startTime,
       type: 'focus',
     };
 
-    this.onEvent(hrefEvent);
+    this.onEvent(kakiatoEvent);
   };
 
   /**
@@ -39,12 +39,12 @@ export class FocusHandler {
     const target = event.target;
     if (!this.isEditableElement(target)) return;
 
-    const hrefEvent: HrefFocusEvent = {
+    const kakiatoEvent: KakiatoFocusEvent = {
       time: Date.now() - this.startTime,
       type: 'blur',
     };
 
-    this.onEvent(hrefEvent);
+    this.onEvent(kakiatoEvent);
   };
 
   /**

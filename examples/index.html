@@ -205,8 +205,8 @@
   </div>
 
   <script type="module">
-    import { HrefRecorder } from '../dist/recorder.bundle.js';
-    import { HrefPlayer } from '../dist/player.bundle.js';
+    import { KakiatoRecorder } from '../dist/recorder.bundle.js';
+    import { KakiatoPlayer } from '../dist/player.bundle.js';
 
     // Recorder
     let recorder = null;
@@ -234,14 +234,14 @@
     const viewerContainer = document.getElementById('viewer');
 
     // Initialize player
-    player = new HrefPlayer({
+    player = new KakiatoPlayer({
       container: viewerContainer,
       speed: 1.0,
     });
 
     // Recorder: Start
     recStartBtn.addEventListener('click', () => {
-      recorder = new HrefRecorder({ target: editor });
+      recorder = new KakiatoRecorder({ target: editor });
       recorder.start();
       recStartTime = Date.now();
 

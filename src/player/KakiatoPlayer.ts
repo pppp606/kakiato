@@ -1,10 +1,10 @@
 /**
- * HrefPlayer
+ * KakiatoPlayer
  *
  * Main class for replaying editing events.
  */
 
-import type { HrefDocument } from '../core/types.js';
+import type { KakiatoDocument } from '../core/types.js';
 import { PlaybackEngine } from './engine.js';
 import { StateReconstructor } from './state.js';
 import { TextViewer, type ViewerStyles } from './viewer.js';
@@ -31,8 +31,8 @@ export interface PlayerState {
   textState: TextState;
 }
 
-export class HrefPlayer {
-  private document: HrefDocument | null = null;
+export class KakiatoPlayer {
+  private document: KakiatoDocument | null = null;
   private engine: PlaybackEngine;
   private stateReconstructor: StateReconstructor;
   private viewer: TextViewer | null = null;
@@ -65,7 +65,7 @@ export class HrefPlayer {
   /**
    * Load a Kakiato document
    */
-  load(document: HrefDocument): void {
+  load(document: KakiatoDocument): void {
     this.document = document;
     this.engine.loadEvents(document.events);
     this.stateReconstructor.reset(document.initial_text);
@@ -79,7 +79,7 @@ export class HrefPlayer {
    * Load from JSON string
    */
   loadJSON(json: string): void {
-    const document = JSON.parse(json) as HrefDocument;
+    const document = JSON.parse(json) as KakiatoDocument;
     this.load(document);
   }
 
@@ -101,7 +101,7 @@ export class HrefPlayer {
   }
 
   /**
-   * Stop playback and reset
+   * Stop playback and reset to beginning
    */
   stop(): void {
     this.engine.stop();
@@ -114,23 +114,10 @@ export class HrefPlayer {
   }
 
   /**
-   * Seek to specific time (in milliseconds)
+   * Seek to a specific time (in milliseconds)
    */
-  seek(time: number): void {
-    if (!this.document) {
-      throw new Error('No document loaded');
-    }
-
-    // Reset state
-    this.stateReconstructor.reset(this.document.initial_text);
-
-    // Seek engine
-    this.engine.seek(time);
-
-    // Render current state
-    if (this.viewer) {
-      this.viewer.render(this.stateReconstructor.getState());
-    }
+  seek(timeMs: number): void {
+    this.engine.seek(timeMs);
   }
 
   /**
@@ -154,36 +141,10 @@ export class HrefPlayer {
   }
 
   /**
-   * Get current text state
+   * Clean up resources
    */
-  getTextState(): TextState {
-    return this.stateReconstructor.getState();
-  }
-
-  /**
-   * Attach viewer to container
-   */
-  attachViewer(
-    container: HTMLElement,
-    options?: { showSelection?: boolean; styles?: ViewerStyles }
-  ): void {
-    this.viewer = new TextViewer({
-      container,
-      showSelection: options?.showSelection ?? true,
-      ...(options?.styles && { styles: options.styles }),
-    });
-
-    // Render current state
-    this.viewer.render(this.stateReconstructor.getState());
-  }
-
-  /**
-   * Detach viewer
-   */
-  detachViewer(): void {
-    if (this.viewer) {
-      this.viewer.clear();
-      this.viewer = null;
-    }
+  destroy(): void {
+    this.engine.stop();
+    // Viewer cleanup is handled by removing the container
   }
 }

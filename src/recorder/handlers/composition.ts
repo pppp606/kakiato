@@ -4,13 +4,13 @@
  * Captures IME composition events for Japanese, Chinese, and other complex input methods.
  */
 
-import type { HrefCompositionEvent } from '../../core/types.js';
+import type { KakiatoCompositionEvent } from '../../core/types.js';
 
 export class CompositionHandler {
   private startTime: number;
-  private onEvent: (event: HrefCompositionEvent) => void;
+  private onEvent: (event: KakiatoCompositionEvent) => void;
 
-  constructor(startTime: number, onEvent: (event: HrefCompositionEvent) => void) {
+  constructor(startTime: number, onEvent: (event: KakiatoCompositionEvent) => void) {
     this.startTime = startTime;
     this.onEvent = onEvent;
   }
@@ -21,14 +21,14 @@ export class CompositionHandler {
   handleCompositionStart = (event: CompositionEvent): void => {
     const pos = this.getCursorPosition(event.target);
 
-    const hrefEvent: HrefCompositionEvent = {
+    const kakiatoEvent: KakiatoCompositionEvent = {
       time: Date.now() - this.startTime,
       type: 'compositionstart',
       ...(pos !== undefined && { pos }),
       ...(event.data && { data: event.data }),
     };
 
-    this.onEvent(hrefEvent);
+    this.onEvent(kakiatoEvent);
   };
 
   /**
@@ -38,7 +38,7 @@ export class CompositionHandler {
     const pos = this.getCursorPosition(event.target);
     const segments = this.extractSegments(event.target);
 
-    const hrefEvent: HrefCompositionEvent = {
+    const kakiatoEvent: KakiatoCompositionEvent = {
       time: Date.now() - this.startTime,
       type: 'compositionupdate',
       ...(pos !== undefined && { pos }),
@@ -46,7 +46,7 @@ export class CompositionHandler {
       ...(segments && segments.length > 0 && { segments }),
     };
 
-    this.onEvent(hrefEvent);
+    this.onEvent(kakiatoEvent);
   };
 
   /**
@@ -55,14 +55,14 @@ export class CompositionHandler {
   handleCompositionEnd = (event: CompositionEvent): void => {
     const pos = this.getCursorPosition(event.target);
 
-    const hrefEvent: HrefCompositionEvent = {
+    const kakiatoEvent: KakiatoCompositionEvent = {
       time: Date.now() - this.startTime,
       type: 'compositionend',
       ...(pos !== undefined && { pos }),
       ...(event.data && { data: event.data }),
     };
 
-    this.onEvent(hrefEvent);
+    this.onEvent(kakiatoEvent);
   };
 
   /**

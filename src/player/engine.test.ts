@@ -1,10 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { PlaybackEngine } from './engine';
-import type { HrefEvent } from '../core/types';
+import type { KakiatoEvent } from '../core/types';
 
 describe('PlaybackEngine', () => {
   let engine: PlaybackEngine;
-  const mockEvents: HrefEvent[] = [
+  const mockEvents: KakiatoEvent[] = [
     { time: 0, type: 'focus' },
     { time: 100, type: 'keydown', key: 'h', code: 'KeyH' },
     { time: 200, type: 'input', inputType: 'insertText', data: 'h' },
@@ -120,7 +120,7 @@ describe('PlaybackEngine', () => {
     });
 
     it('should seek to specific time', () => {
-      const events: HrefEvent[] = [];
+      const events: KakiatoEvent[] = [];
       engine.onEvent((event) => events.push(event));
 
       engine.seek(200);
@@ -144,7 +144,7 @@ describe('PlaybackEngine', () => {
     it('should emit events to registered handlers', () => {
       engine.loadEvents(mockEvents);
 
-      const emittedEvents: HrefEvent[] = [];
+      const emittedEvents: KakiatoEvent[] = [];
       engine.onEvent((event) => {
         emittedEvents.push(event);
       });
@@ -158,8 +158,8 @@ describe('PlaybackEngine', () => {
     it('should support multiple event handlers', () => {
       engine.loadEvents(mockEvents);
 
-      const events1: HrefEvent[] = [];
-      const events2: HrefEvent[] = [];
+      const events1: KakiatoEvent[] = [];
+      const events2: KakiatoEvent[] = [];
 
       engine.onEvent((event) => events1.push(event));
       engine.onEvent((event) => events2.push(event));
@@ -174,8 +174,8 @@ describe('PlaybackEngine', () => {
     it('should remove event handlers', () => {
       engine.loadEvents(mockEvents);
 
-      const events: HrefEvent[] = [];
-      const handler = (event: HrefEvent) => events.push(event);
+      const events: KakiatoEvent[] = [];
+      const handler = (event: KakiatoEvent) => events.push(event);
 
       engine.onEvent(handler);
       engine.offEvent(handler);

@@ -4,13 +4,13 @@
  * Captures keydown and keyup events with modifier keys and cursor position.
  */
 
-import type { HrefKeyboardEvent, HrefModifiers } from '../../core/types.js';
+import type { KakiatoKeyboardEvent, KakiatoModifiers } from '../../core/types.js';
 
 export class KeyboardHandler {
   private startTime: number;
-  private onEvent: (event: HrefKeyboardEvent) => void;
+  private onEvent: (event: KakiatoKeyboardEvent) => void;
 
-  constructor(startTime: number, onEvent: (event: HrefKeyboardEvent) => void) {
+  constructor(startTime: number, onEvent: (event: KakiatoKeyboardEvent) => void) {
     this.startTime = startTime;
     this.onEvent = onEvent;
   }
@@ -22,7 +22,7 @@ export class KeyboardHandler {
     const pos = this.getCursorPosition(event.target);
     const modifiers = this.extractModifiers(event);
 
-    const hrefEvent: HrefKeyboardEvent = {
+    const kakiatoEvent: KakiatoKeyboardEvent = {
       time: Date.now() - this.startTime,
       type: 'keydown',
       key: event.key,
@@ -31,7 +31,7 @@ export class KeyboardHandler {
       ...(modifiers && { modifiers }),
     };
 
-    this.onEvent(hrefEvent);
+    this.onEvent(kakiatoEvent);
   };
 
   /**
@@ -41,7 +41,7 @@ export class KeyboardHandler {
     const pos = this.getCursorPosition(event.target);
     const modifiers = this.extractModifiers(event);
 
-    const hrefEvent: HrefKeyboardEvent = {
+    const kakiatoEvent: KakiatoKeyboardEvent = {
       time: Date.now() - this.startTime,
       type: 'keyup',
       key: event.key,
@@ -50,14 +50,14 @@ export class KeyboardHandler {
       ...(modifiers && { modifiers }),
     };
 
-    this.onEvent(hrefEvent);
+    this.onEvent(kakiatoEvent);
   };
 
   /**
    * Extract modifier keys from keyboard event
    */
-  private extractModifiers(event: KeyboardEvent): HrefModifiers | undefined {
-    const modifiers: HrefModifiers = {};
+  private extractModifiers(event: KeyboardEvent): KakiatoModifiers | undefined {
+    const modifiers: KakiatoModifiers = {};
     let hasModifiers = false;
 
     if (event.shiftKey) {

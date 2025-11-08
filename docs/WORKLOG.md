@@ -7,7 +7,7 @@
 
 ### Next steps
 - Decide on package tooling (build/test) and add linting + schema validation dependencies.
-- Implement recorder module APIs that emit `HrefEvent` sequences conforming to the schema.
+- Implement recorder module APIs that emit `KakiatoEvent` sequences conforming to the schema.
 - Provide usage examples and fixtures under `examples/` for end-to-end validation.
 - Document validation workflow in `README.md` once tooling is in place.
 
@@ -51,9 +51,9 @@
 ## Phase 1: Recorder 実装 🎙️
 
 ### ⏳ 1.1 基本構造の作成
-- **ファイル**: `src/recorder/index.ts`, `src/recorder/HrefRecorder.ts`
+- **ファイル**: `src/recorder/index.ts`, `src/recorder/KakiatoRecorder.ts`
 - **内容**:
-  - HrefRecorder クラスの骨組み
+  - KakiatoRecorder クラスの骨組み
   - 初期化・開始・停止のAPI
   - セッションメタデータ生成
 - **ステータス**: ⏳ 未着手
@@ -110,9 +110,9 @@
 ## Phase 2: Player 実装 🎬
 
 ### ⏳ 2.1 基本構造の作成
-- **ファイル**: `src/player/index.ts`, `src/player/HrefPlayer.ts`
+- **ファイル**: `src/player/index.ts`, `src/player/KakiatoPlayer.ts`
 - **内容**:
-  - HrefPlayer クラスの骨組み
+  - KakiatoPlayer クラスの骨組み
   - HREF ドキュメントの読み込み
   - 再生・一時停止・停止のAPI
 - **ステータス**: ⏳ 未着手
@@ -207,8 +207,8 @@
 ### ⏳ 4.2 API ドキュメント
 - **ファイル**: `docs/API.md`
 - **内容**:
-  - HrefRecorder API
-  - HrefPlayer API
+  - KakiatoRecorder API
+  - KakiatoPlayer API
   - 型定義の説明
 - **ステータス**: ⏳ 未着手
 

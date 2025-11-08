@@ -4,17 +4,17 @@
  * Handles timeline control, event scheduling, and playback speed.
  */
 
-import type { HrefEvent } from '../core/types.js';
+import type { KakiatoEvent } from '../core/types.js';
 
 export interface PlaybackOptions {
   speed?: number;
   loop?: boolean;
 }
 
-export type PlaybackEventHandler = (event: HrefEvent, index: number) => void;
+export type PlaybackEventHandler = (event: KakiatoEvent, index: number) => void;
 
 export class PlaybackEngine {
-  private events: HrefEvent[] = [];
+  private events: KakiatoEvent[] = [];
   private currentIndex = 0;
   private isPlaying = false;
   private speed = 1.0;
@@ -32,7 +32,7 @@ export class PlaybackEngine {
   /**
    * Load events for playback
    */
-  loadEvents(events: HrefEvent[]): void {
+  loadEvents(events: KakiatoEvent[]): void {
     this.events = events;
     this.currentIndex = 0;
     this.pausedAt = 0;
@@ -225,7 +225,7 @@ export class PlaybackEngine {
   /**
    * Emit event to all handlers
    */
-  private emitEvent(event: HrefEvent, index: number): void {
+  private emitEvent(event: KakiatoEvent, index: number): void {
     for (const handler of this.onEventHandlers) {
       handler(event, index);
     }

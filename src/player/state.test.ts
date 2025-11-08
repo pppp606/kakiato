@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { StateReconstructor } from './state';
-import type { HrefEvent } from '../core/types';
+import type { KakiatoEvent } from '../core/types';
 
 describe('StateReconstructor', () => {
   let reconstructor: StateReconstructor;
@@ -26,7 +26,7 @@ describe('StateReconstructor', () => {
 
   describe('input events', () => {
     it('should handle text insertion', () => {
-      const event: HrefEvent = {
+      const event: KakiatoEvent = {
         time: 100,
         type: 'input',
         inputType: 'insertText',
@@ -67,7 +67,7 @@ describe('StateReconstructor', () => {
     });
 
     it('should use full text from event when available', () => {
-      const event: HrefEvent = {
+      const event: KakiatoEvent = {
         time: 100,
         type: 'input',
         inputType: 'insertText',
@@ -120,7 +120,7 @@ describe('StateReconstructor', () => {
     it('should update selection range', () => {
       reconstructor.reset('hello world');
 
-      const event: HrefEvent = {
+      const event: KakiatoEvent = {
         time: 100,
         type: 'selectionchange',
         anchor: { index: 0, affinity: 'forward' },
@@ -138,7 +138,7 @@ describe('StateReconstructor', () => {
     it('should handle backward selection', () => {
       reconstructor.reset('hello world');
 
-      const event: HrefEvent = {
+      const event: KakiatoEvent = {
         time: 100,
         type: 'selectionchange',
         anchor: { index: 5, affinity: 'backward' },
@@ -158,7 +158,7 @@ describe('StateReconstructor', () => {
     it('should update cursor position from keyboard event', () => {
       reconstructor.reset('hello');
 
-      const event: HrefEvent = {
+      const event: KakiatoEvent = {
         time: 100,
         type: 'keydown',
         key: 'ArrowRight',
