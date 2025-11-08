@@ -16,6 +16,16 @@ export interface RecorderOptions {
   target?: HTMLElement | Document;
   /** Auto-start recording on initialization */
   autoStart?: boolean;
+  /**
+   * Record detailed IME composition update events (default: false)
+   *
+   * When false (default): Records only start and end events (fact that conversion happened and final text)
+   * When true: Records all intermediate conversion candidates during IME input
+   *
+   * WARNING: When enabled, this records all conversion candidates you cycle through,
+   * which may contain sensitive information like names, addresses, company names, etc.
+   */
+  recordCompositionDetails?: boolean;
 }
 
 export class KakiatoRecorder {
@@ -25,6 +35,7 @@ export class KakiatoRecorder {
   private initialText = '';
   private startTime = 0;
   private target: HTMLElement | Document;
+  private options: RecorderOptions;
 
   // Event handlers
   private keyboardHandler: KeyboardHandler | null = null;
@@ -34,6 +45,7 @@ export class KakiatoRecorder {
   private focusHandler: FocusHandler | null = null;
 
   constructor(options: RecorderOptions = {}) {
+    this.options = options;
     this.target = options.target ?? document;
     if (options.autoStart) {
       this.start();
@@ -66,15 +78,18 @@ export class KakiatoRecorder {
 
     this.keyboardHandler = new KeyboardHandler(this.startTime, onEvent);
     this.inputHandler = new InputHandler(this.startTime, onEvent);
-    this.compositionHandler = new CompositionHandler(this.startTime, onEvent);
     this.selectionHandler = new SelectionHandler(this.startTime, onEvent);
     this.focusHandler = new FocusHandler(this.startTime, onEvent);
 
     this.keyboardHandler.attach(this.target);
     this.inputHandler.attach(this.target);
-    this.compositionHandler.attach(this.target);
     this.selectionHandler.attach();
     this.focusHandler.attach(this.target);
+
+    // Always attach composition handler, but control detail level
+    const recordDetails = this.options.recordCompositionDetails === true;
+    this.compositionHandler = new CompositionHandler(this.startTime, onEvent, recordDetails);
+    this.compositionHandler.attach(this.target);
 
     console.log('Recording started');
   }

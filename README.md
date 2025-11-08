@@ -4,6 +4,7 @@
 
 A comprehensive event capture and replay system for text editing interactions. Kakiato records every keystroke, IME input, selection change, and editing event with precise timing, allowing you to replay and analyze text editing sessions.
 
+🎮 **[Try the Live Demo](https://kakiato.pages.dev/)**
 
 ## Features
 
@@ -79,8 +80,10 @@ player.setSpeed(2.0);
 
 ```typescript
 interface RecorderOptions {
-  target?: HTMLElement | Document;  // Element to observe (default: document)
-  autoStart?: boolean;              // Auto-start recording (default: false)
+  target?: HTMLElement | Document;     // Element to observe (default: document)
+  autoStart?: boolean;                 // Auto-start recording (default: false)
+  recordCompositionDetails?: boolean;  // Record IME candidate changes (default: false)
+                                       // WARNING: May contain sensitive info when enabled
 }
 ```
 

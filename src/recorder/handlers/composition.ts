@@ -9,10 +9,12 @@ import type { KakiatoCompositionEvent } from '../../core/types.js';
 export class CompositionHandler {
   private startTime: number;
   private onEvent: (event: KakiatoCompositionEvent) => void;
+  private recordDetails: boolean;
 
-  constructor(startTime: number, onEvent: (event: KakiatoCompositionEvent) => void) {
+  constructor(startTime: number, onEvent: (event: KakiatoCompositionEvent) => void, recordDetails = false) {
     this.startTime = startTime;
     this.onEvent = onEvent;
+    this.recordDetails = recordDetails;
   }
 
   /**
@@ -35,6 +37,11 @@ export class CompositionHandler {
    * Handle compositionupdate event
    */
   handleCompositionUpdate = (event: CompositionEvent): void => {
+    // Skip update events if detailed recording is disabled
+    if (!this.recordDetails) {
+      return;
+    }
+
     const pos = this.getCursorPosition(event.target);
     const segments = this.extractSegments(event.target);
 
